@@ -11,8 +11,9 @@
         "name": "actions.intent.MAIN",
         "trigger": {
           "queryPatterns": [
-            "Rent a car",
-            "Get me some wheels"
+            "Report an Adverse Event",
+            "I want to report an Adverse Event",
+            "I wish to report an AE"
           ]
         }
       }
