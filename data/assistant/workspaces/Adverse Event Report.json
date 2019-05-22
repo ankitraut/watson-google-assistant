@@ -1,0 +1,1434 @@
+{
+  "name": "Assistant",
+  "intents": [
+    {
+      "intent": "No",
+      "examples": [
+        {
+          "text": "no"
+        },
+        {
+          "text": "Absolutely not."
+        },
+        {
+          "text": "No way"
+        },
+        {
+          "text": "Please do not!"
+        },
+        {
+          "text": "No thanks"
+        },
+        {
+          "text": "That's not what I want at all"
+        },
+        {
+          "text": "Please don't"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "patient_details",
+      "examples": [
+        {
+          "text": "Esha is 22 years old female"
+        },
+        {
+          "text": "ankit is a 21 years old asian male in japan"
+        },
+        {
+          "text": "ankit is a 21 years old asian male"
+        },
+        {
+          "text": "ankit is a 21 years old asian in japan"
+        },
+        {
+          "text": "ankit is a  asian male in india"
+        },
+        {
+          "text": "The patient is ankit, he is 22 years old and lives in canada"
+        },
+        {
+          "text": "John is the patient, he is a male"
+        },
+        {
+          "text": "the patient's name is praveen, he is 25 years old"
+        },
+        {
+          "text": "tervor is living in africa and he is suffering from cancer"
+        },
+        {
+          "text": "The patient is an african male living tanzania"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "report_adverse_event",
+      "examples": [
+        {
+          "text": "I want to report an adverse drug reaction"
+        },
+        {
+          "text": "Help me report an adverse drug reaction"
+        },
+        {
+          "text": "I want to report an adverse event"
+        },
+        {
+          "text": "Report an AE"
+        },
+        {
+          "text": "Report an ADR"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Yes",
+      "examples": [
+        {
+          "text": "That sounds good"
+        },
+        {
+          "text": "Please do"
+        },
+        {
+          "text": "Okay"
+        },
+        {
+          "text": "Sure"
+        },
+        {
+          "text": "yes"
+        },
+        {
+          "text": "I'd like that"
+        },
+        {
+          "text": "Ok"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "sex",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Male",
+          "synonyms": [
+            "M",
+            "He",
+            "Him"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Female",
+          "synonyms": [
+            "F",
+            "she",
+            "her"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "age",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "months",
+          "synonyms": [
+            "month",
+            "mon"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Years",
+          "synonyms": [
+            "years",
+            "year",
+            "yrs"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-person",
+      "values": []
+    },
+    {
+      "entity": "ethnicity",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Hispanic",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Latino",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Asian",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Black",
+          "synonyms": [
+            "African",
+            "African American"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Caucasian",
+          "synonyms": [
+            "White"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Pacific Islander",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Native Hawaiian",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Native American",
+          "synonyms": [
+            "Alaskan Native"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-location",
+      "values": []
+    }
+  ],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-07-10"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Capture treatment data",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1557921163550",
+      "actions": [
+        {
+          "name": "ankitraut87@gmail.com_dev/AWS_med",
+          "type": "cloud_function",
+          "parameters": {
+            "text": "$input",
+            "access_keys": "$aws_credentials"
+          },
+          "credentials": "$credentials",
+          "result_variable": "$treatments_result"
+        }
+      ],
+      "context": {
+        "input": "<? input.text ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$treatments:0",
+      "dialog_node": "node_6_1557921163551"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1555322760773",
+      "context": {
+        "sex": "@sex"
+      },
+      "metadata": {},
+      "conditions": "@sex",
+      "event_name": "input",
+      "dialog_node": "handler_8_1555322760773",
+      "previous_sibling": "handler_9_1555322760773"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Is the patient a Male or a Female?"
+      },
+      "parent": "slot_7_1555322760773",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_9_1555322760773"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great! Lets move to the next step."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1557825340471",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_20_1557828321340"
+      },
+      "conditions": "$confirmation=#Yes",
+      "dialog_node": "node_11_1557826021306",
+      "previous_sibling": "node_31_1557817018674"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Lets start over!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1557825340471",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_31_1557817018674"
+      },
+      "conditions": "$confirmation=#No",
+      "dialog_node": "node_12_1557826057179",
+      "previous_sibling": "node_11_1557826021306"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_6_1557825340471",
+      "metadata": {},
+      "variable": "$confirmation",
+      "dialog_node": "slot_8_1557825819651",
+      "previous_sibling": "node_12_1557826057179"
+    },
+    {
+      "type": "standard",
+      "title": "Delete Context - Incorrect data captured",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1557825340471",
+      "context": {
+        "age": null,
+        "sex": null,
+        "person": null,
+        "location": null,
+        "ethnicity": null,
+        "confirmation": null
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_2_1555322664590"
+      },
+      "dialog_node": "node_31_1557817018674",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Capture test data",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1557920751402",
+      "actions": [
+        {
+          "name": "ankitraut87@gmail.com_dev/AWS_med",
+          "type": "cloud_function",
+          "parameters": {
+            "text": "$input",
+            "access_keys": "$aws_credentials"
+          },
+          "credentials": "$credentials",
+          "result_variable": "$tests_result"
+        }
+      ],
+      "context": {
+        "input": "<? input.text ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$tests:0",
+      "dialog_node": "node_2_1557920860450"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "please enter input"
+      },
+      "parent": "slot_12_1557901655635",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_14_1557901655635",
+      "previous_sibling": "handler_13_1557901655635"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_12_1557901655635",
+      "context": {
+        "input": "<?input.text?>"
+      },
+      "metadata": {},
+      "conditions": "<?input.text?>",
+      "event_name": "input",
+      "dialog_node": "handler_13_1557901655635"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "variable": "$person",
+      "dialog_node": "slot_4_1555322720325",
+      "previous_sibling": "handler_3_1555322720313"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {},
+      "variable": "$age",
+      "dialog_node": "slot_22_1555325375205",
+      "previous_sibling": "slot_7_1555322760773"
+    },
+    {
+      "type": "standard",
+      "title": "Describe Adverse Event",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please describe the adverse event $person is experiencing."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1555322664590",
+      "context": {
+        "adverse_event": true
+      },
+      "metadata": {},
+      "conditions": "$confirmation=true",
+      "dialog_node": "node_20_1557828321340",
+      "previous_sibling": "node_6_1557825340471"
+    },
+    {
+      "type": "frame",
+      "title": "Confirmation",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {
+        "fallback": "leave",
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$slots_filled=true",
+      "dialog_node": "node_6_1557825340471",
+      "digress_out": "allow_all",
+      "previous_sibling": "slot_4_1555322720325",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "variable": "$sex",
+      "dialog_node": "slot_7_1555322760773",
+      "previous_sibling": "node_5_1557825324497"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {
+        "_customization": {}
+      },
+      "variable": "$location",
+      "dialog_node": "slot_30_1555328586166",
+      "previous_sibling": "slot_27_1555328557054"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1555322664590",
+      "context": {
+        "slots_filled": true
+      },
+      "disabled": true,
+      "metadata": {},
+      "dialog_node": "node_5_1557825324497",
+      "previous_sibling": "node_20_1557828321340"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1555322664590",
+      "metadata": {},
+      "variable": "$ethnicity",
+      "dialog_node": "slot_27_1555328557054",
+      "previous_sibling": "slot_22_1555325375205"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "I could not capture any information, can you try rephrasing <b>Example - The patient is Sarah, she is 25 years old female.<b>",
+            ""
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1555322664590",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_3_1555322720313"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_16_1557902352123",
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$adverse_event=true",
+      "dialog_node": "node_45_1557922822908",
+      "previous_sibling": "node_5_1557901655632"
+    },
+    {
+      "type": "standard",
+      "title": "Prompt the details collected.",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I have collected the following details."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "<b>Adverse Event:</b> <? $event_names.join(',') ?><br><b>Drugs:</b> <? $drug_names_list.join(',') ?></br><br><b>Lab Tests performed: </b><? $test_names_list.join(',') ?></br><br><b>Treatment Received: </b><? $treatment_names.join(',') ?></br>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_16_1557902352123",
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_1_1557923570770",
+      "previous_sibling": "node_45_1557922822908"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_16_1557902352123",
+      "metadata": {},
+      "variable": "$input",
+      "dialog_node": "slot_23_1557902352125",
+      "previous_sibling": "node_1_1557923570770"
+    },
+    {
+      "type": "standard",
+      "title": "extract entities(AWS) as context variables",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_16_1557902352123",
+      "context": {
+        "drugs": "$result.drugs",
+        "tests": "$result.tests",
+        "events": "$result.events",
+        "drugs_list": "$result.drugs_list",
+        "tests_list": "$result.tests_list",
+        "treatments": "$result.treatments",
+        "event_names": "$result.event_names",
+        "drug_names_list": "$result.drug_names_list",
+        "test_names_list": "$result.test_names_list",
+        "treatment_names": "$result.treatment_names"
+      },
+      "metadata": {
+        "fallback": "leave"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_45_1557922822908"
+      },
+      "conditions": "$adverse_event=true",
+      "dialog_node": "node_5_1557901655632"
+    },
+    {
+      "type": "response_condition",
+      "output": {},
+      "parent": "node_1_1555322502364",
+      "disabled": true,
+      "metadata": {},
+      "conditions": "$confirmation=#No",
+      "dialog_node": "node_6_1557817845853",
+      "previous_sibling": "node_5_1557817825400"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I did not understand, can you please rephrase."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1555322502364",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1555322502364"
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_12_1558081517109",
+      "previous_sibling": "node_2_1555322664590"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sure, Let's start with the Patient Details."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1555322502364",
+      "disabled": true,
+      "metadata": {},
+      "dialog_node": "node_5_1557817825400",
+      "previous_sibling": "node_12_1558081517109"
+    },
+    {
+      "type": "frame",
+      "title": "Patient Details",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_1_1555322502364",
+      "context": {
+        "slots_filled": true
+      },
+      "metadata": {
+        "fallback": "leave",
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#patient_details",
+      "dialog_node": "node_2_1555322664590",
+      "digress_out": "allow_all",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "please enter input"
+      },
+      "parent": "slot_23_1557902352125",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_25_1557902352125",
+      "previous_sibling": "handler_24_1557902352125"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_23_1557902352125",
+      "context": {
+        "input": "<?input.text?>"
+      },
+      "metadata": {},
+      "conditions": "<?input.text?>",
+      "event_name": "input",
+      "dialog_node": "handler_24_1557902352125"
+    },
+    {
+      "type": "response_condition",
+      "output": {},
+      "parent": "node_31_1557817018674",
+      "disabled": true,
+      "metadata": {},
+      "dialog_node": "node_19_1557822827473"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1555322720325",
+      "context": {
+        "person": "@sys-person"
+      },
+      "metadata": {},
+      "conditions": "@sys-person",
+      "event_name": "input",
+      "dialog_node": "handler_5_1555322720325",
+      "previous_sibling": "handler_6_1555322720325"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Can you provide the patient's name?"
+      },
+      "parent": "slot_4_1555322720325",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_6_1555322720325"
+    },
+    {
+      "type": "standard",
+      "title": "Tests context variables",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_2_1557920860450",
+      "context": {
+        "tests": 1,
+        "tests_list": "$tests_result.tests_list",
+        "test_names_list": "$tests_result.test_names_list"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_45_1557922822908"
+      },
+      "conditions": "$tests:0",
+      "dialog_node": "node_3_1557920952450"
+    },
+    {
+      "type": "standard",
+      "title": "Capture adverse event input",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1557914770252",
+      "actions": [
+        {
+          "name": "ankitraut87@gmail.com_dev/AWS_med",
+          "type": "cloud_function",
+          "parameters": {
+            "text": "$input",
+            "access_keys": "$aws_credentials"
+          },
+          "credentials": "$credentials",
+          "result_variable": "$events_result"
+        }
+      ],
+      "context": {
+        "input": "<? input.text ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$events:0",
+      "dialog_node": "node_1_1557915431876"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_2_1557916650018",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_45_1557922822908"
+      },
+      "conditions": "$events:1",
+      "dialog_node": "node_3_1557917017481",
+      "previous_sibling": "node_2_1557915516361"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_2_1557916650018",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$events:0",
+      "dialog_node": "node_2_1557915516361",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_6_1557917282299",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_45_1557922822908"
+      },
+      "conditions": "$drugs:1",
+      "dialog_node": "node_9_1557917282299",
+      "previous_sibling": "node_7_1557917282299"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_6_1557917282299",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$drugs:0",
+      "dialog_node": "node_7_1557917282299"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "What is the ethnicity of the patient?"
+      },
+      "parent": "slot_27_1555328557054",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_29_1555328557054",
+      "previous_sibling": "handler_28_1555328557054"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_27_1555328557054",
+      "context": {
+        "ethnicity": "@ethnicity"
+      },
+      "metadata": {},
+      "conditions": "@ethnicity",
+      "event_name": "input",
+      "dialog_node": "handler_28_1555328557054"
+    },
+    {
+      "type": "standard",
+      "title": "Adverse Event",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Let's start with the Patient Details.<br>Details such as the Name, Age, Sex, Ethnicity, Place of Adverse Event etc.</br><b>Ex.: Alice is 22 years old female</b>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1558070687008",
+      "context": {
+        "Patient_details": true
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#report_adverse_event",
+      "dialog_node": "node_1_1555322502364",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry,"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1557917282299",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_4_1557917282297"
+      },
+      "conditions": "$drugs:0",
+      "dialog_node": "node_8_1557917282299"
+    },
+    {
+      "type": "standard",
+      "title": "Capture Input and extract entities(AWS)",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_20_1557828321340",
+      "actions": [
+        {
+          "name": "ankitraut87@gmail.com_dev/AWS_med",
+          "type": "cloud_function",
+          "parameters": {
+            "text": "$input",
+            "access_keys": "$aws_credentials"
+          },
+          "credentials": "$credentials",
+          "result_variable": "$result"
+        }
+      ],
+      "context": {
+        "input": "<? input.text ?>"
+      },
+      "metadata": {
+        "fallback": "leave"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_5_1557901655632"
+      },
+      "conditions": "$adverse_event=true",
+      "dialog_node": "node_16_1557902352123"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "<b>Patient Details:</b> <br>$person is a $age years old $ethnicity $sex having an adverse event in $location.</br> <br>Can you confirm?(Yes/No)</br>"
+      },
+      "parent": "slot_8_1557825819651",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_10_1557825819651",
+      "previous_sibling": "handler_9_1557825819651"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_8_1557825819651",
+      "context": {
+        "confirmation": "(#Yes || #No) && slot_in_focus"
+      },
+      "conditions": "(#Yes || #No) && slot_in_focus",
+      "event_name": "input",
+      "dialog_node": "handler_9_1557825819651"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry,"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1557915516361",
+      "context": {
+        "events": "$events_result.events",
+        "event_names": "$events_result.event_names"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_1_1557914770252"
+      },
+      "conditions": "$events:0",
+      "dialog_node": "node_1_1557915927743"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_5_1557901655632",
+      "metadata": {},
+      "variable": "$input",
+      "dialog_node": "slot_12_1557901655635"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_30_1555328586166",
+      "context": {
+        "location": "@sys-location"
+      },
+      "metadata": {},
+      "conditions": "@sys-location",
+      "event_name": "input",
+      "dialog_node": "handler_31_1555328586166",
+      "previous_sibling": "handler_32_1555328586166"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "What is the country of the AE?"
+      },
+      "parent": "slot_30_1555328586166",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_32_1555328586166"
+    },
+    {
+      "type": "standard",
+      "title": "Treatment not captured",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Did $person receive any <b>treatments</b>?. If you have details, please mention."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_45_1557922822908",
+      "metadata": {},
+      "conditions": "$treatments:0",
+      "dialog_node": "node_5_1557921163550",
+      "previous_sibling": "node_1_1557920751402"
+    },
+    {
+      "type": "standard",
+      "title": "Drug not captured",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I could not find the medication(drugs taken), can you please mention the details of medication."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_45_1557922822908",
+      "metadata": {},
+      "conditions": "$drugs:0",
+      "dialog_node": "node_4_1557917282297",
+      "previous_sibling": "node_1_1557914770252"
+    },
+    {
+      "type": "standard",
+      "title": "Tests not captured",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I did not capture any data for <b>Laboratory Tests</b>. If you have test details, please mention."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_45_1557922822908",
+      "metadata": {},
+      "conditions": "$tests:0",
+      "dialog_node": "node_1_1557920751402",
+      "previous_sibling": "node_4_1557917282297"
+    },
+    {
+      "type": "standard",
+      "title": "Event not captured",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I could not find the adverse event, can you try rephrasing"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_45_1557922822908",
+      "metadata": {},
+      "conditions": "$events:0",
+      "dialog_node": "node_1_1557914770252"
+    },
+    {
+      "type": "standard",
+      "title": "Recapturing drugs information",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_5_1557917282299",
+      "context": {
+        "drugs": "$drugs_result.drugs",
+        "drugs_list": "$drugs_result.drugs_list",
+        "drug_names_list": "$drugs_result.drug_names_list"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$drugs:0",
+      "dialog_node": "node_6_1557917282299"
+    },
+    {
+      "type": "standard",
+      "title": "Treatments context variables",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_6_1557921163551",
+      "context": {
+        "treatments": 1,
+        "treatments_names": "treatments_result.treatments_names"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_1_1557923570770"
+      },
+      "conditions": "$treatments:0",
+      "dialog_node": "node_7_1557921163551"
+    },
+    {
+      "type": "standard",
+      "title": "Capture drugs input",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1557917282297",
+      "actions": [
+        {
+          "name": "ankitraut87@gmail.com_dev/AWS_med",
+          "type": "cloud_function",
+          "parameters": {
+            "text": "$input",
+            "access_keys": "$aws_credentials"
+          },
+          "credentials": "$credentials",
+          "result_variable": "$drugs_result"
+        }
+      ],
+      "context": {
+        "input": "<? input.text ?>"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$drugs:0",
+      "dialog_node": "node_5_1557917282299"
+    },
+    {
+      "type": "standard",
+      "title": "Recapturing adverse event information",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_1_1557915431876",
+      "context": {
+        "events": "$events_result.events",
+        "event_names": "$events_result.event_names"
+      },
+      "metadata": {},
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "$events:0",
+      "dialog_node": "node_2_1557916650018"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_22_1555325375205",
+      "context": {
+        "age": "@sys-number @age"
+      },
+      "metadata": {},
+      "conditions": "@sys-number && @age",
+      "event_name": "input",
+      "dialog_node": "handler_23_1555325375205",
+      "previous_sibling": "handler_24_1555325375205"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "What is the age of the patient?"
+      },
+      "parent": "slot_22_1555325375205",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_24_1555325375205"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "counter": "<? $counter+1 ?>"
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "digress_in": "returns",
+      "dialog_node": "Anything else",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1556015688784"
+    },
+    {
+      "type": "standard",
+      "title": "Connect to human",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I am having a tough time understanding you. Sending an agent to help you."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "$counter > 2",
+      "dialog_node": "node_1_1556015688784",
+      "previous_sibling": "node_1_1558070687008"
+    },
+    {
+      "type": "folder",
+      "title": "Adverse Event",
+      "metadata": {},
+      "conditions": "#report_adverse_event",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1558070687008",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hey Doc! I can help you in reporting an Adverse Event"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "You can start by saying something like:",
+            "options": [
+              {
+                "label": "Report an Adverse Event",
+                "value": {
+                  "input": {
+                    "text": "Report an Adverse Event"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {
+        "counter": 0,
+        "credentials": {
+          "user": "46704a74-ef2d-4698-950b-c4e987b7b699",
+          "password": "QSevs9YqsWOKXSJViQrHsJN2GQoY8XklP7AN1GFRlRGfXRW9XOPKe18FTTX9moS1"
+        },
+        "aws_credentials": {
+          "region": "us-east-2",
+          "access_key": "AKIA4DTBS22UIOLA6UUF",
+          "secret_access_key": "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"
+        }
+      },
+      "metadata": {},
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "workspace_id": "01e4ab21-0302-461f-85d9-133f15668cff",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
